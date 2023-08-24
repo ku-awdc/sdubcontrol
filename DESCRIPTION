@@ -1,18 +1,28 @@
 Package: sdubcontrol
 Title: What the Package Does (One Line, Title Case)
 Version: 0.1.0-1
-Authors@R: 
-    person("Matt", "Denwood", , "md@sund.ku.dk", role = c("aut", "cre"))
+Date: 2023-08-24
 Description: What the package does (one paragraph).
+Authors@R:
+  c(
+    person(given="Joe", family="Bloggs", email="joe@bloggs.com", role=c("aut", "cre"))
+  )    
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Depends:
+  R (>= 4.1.0)
+Imports:
+  rlang,
+  dplyr,
+  tibble
 Suggests: 
-    knitr,
-    rmarkdown,
-    spelling,
-    testthat (>= 3.0.0)
+  neatpkg,
+  knitr,
+  rmarkdown,
+  spelling,
+  testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Language: en-GB
