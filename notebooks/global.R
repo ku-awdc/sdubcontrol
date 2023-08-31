@@ -143,7 +143,7 @@ sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCa
            SDLevel=1,
            CalfHerdID = ifelse(CalfYears > 0,1,0),
            HeifHerdID = ifelse(HeiferYears > 0,1,0),
-           AdultHerdID = ifelse(CalfHerdID==1 | HeifHerdID==1,1,0),
+           AdultHerdID = ifelse(CalfHerdID==0 & HeifHerdID==0,1,0),
            nCalf_2 = case_when(CalfYears>=15 ~ 8,
                                CalfYears>15 & CalfYears>=30 ~ 14,
                                CalfYears>30 & CalfYears>=50 ~ 20,
@@ -167,11 +167,7 @@ sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCa
                                rbinom(1,1,probClin)),
              SampMilk = rbinom(1,1,probSampMilk)
       ) %>%
-      mutate(ResultMilk = ifelse(SDInf==1,
-                                 SampMilk*rbinom(1,1,seMilk),
-                                 SampMilk*rbinom(1,1,1-spMilk)),
-
-             ResultSlaugh = ifelse(SDInf==1,
+      mutate(ResultSlaugh = ifelse(SDInf==1,
                                    SampSlaugh*rbinom(1,1,(prevAni*seAni+(1-prevAni)*(1-spAni))),
                                    SampSlaugh*rbinom(1,1,1-spAni)),
              ResultHeif = ifelse(SDInf==1,
@@ -180,15 +176,21 @@ sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCa
              ResultCalf = ifelse(SDInf==1,
                                  SampCalf*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^nCalf), # OBS include CalfYears
                                  SampCalf*rbinom(1,1,1-(1-(1-spAni))^nCalf)),
+             ResultAdult = ifelse(SDInf==1,
+                                  SampAdult*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^nAdult), # OBS include CalfYears
+                                  SampAdult*rbinom(1,1,1-(1-(1-spAni))^nAdult)),
+             ResultVol = ifelse(SDInf==1,
+                                SampVol*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^nVol),
+                                SampVol*rbinom(1,1,1-(1-(1-spAni))^nVol)),
              ResultSusp = ifelse(SDInf==1,
                                  SampSusp*rbinom(1,1,seClin),
                                  SampSusp*rbinom(1,1,1-spClin)),
-             ResultVol = ifelse(SDInf==1,
-                                SampVol*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^nVol),
-                                SampVol*rbinom(1,1,1-(1-(1-spAni))^nVol))
+             ResultMilk = ifelse(SDInf==1,
+                                 SampMilk*rbinom(1,1,seMilk),
+                                 SampMilk*rbinom(1,1,1-spMilk))
       ) %>%
-      mutate(SampSum = sum(SampMilk,SampHeif,SampSlaugh,SampSusp,SampVol),
-             ResultSum = sum(ResultMilk,ResultHeif,ResultSlaugh,ResultSusp,ResultVol),
+      mutate(SampSum = sum(SampSlaugh,SampHeif,SampCalf,SampAdult,SampVol,SampSusp,SampMilk),
+             ResultSum = sum(ResultSlaugh,ResultHeif,ResultCalf,ResultAdult,ResultVol,ResultSusp,ResultMilk),
              SDLevel = case_when(SampSum>0 & ResultSum==0 ~ 1,
                                  SampSum>0 & ResultSum>0 ~ 2,
                                  SDLevel==1 & SampSum==0 ~ 1,
