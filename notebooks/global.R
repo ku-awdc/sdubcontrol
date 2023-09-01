@@ -88,7 +88,7 @@ seAni <- 0.95
 # Animal blood sample specificity
 spAni <- 0.98
 # Probability of slaughter samples for each herd type
-probSampSlaugh = c(0,0.2,0.2,0.2,0.2,0.2)
+probSampSlaugh = c(0,0.5,0.5,0.5,0.5,0.5)
 # Probability of heifer samples for each herd type
 probSampHeif = c(c(0,1,1,0,0,0),c(1,1,1,1,1,1))
 # Number of Heifers sampled
@@ -133,9 +133,9 @@ prevAni <- 0.4
 
 #### Surveillance output ####
 # Function for generating surveillance output
-sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCalf,nVol,seClin,spClin,probClinInf,probClin,seMilk,spMilk,burnin=3) {
+sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCalf,nAdult,nVol,seClin,spClin,probClinInf,probClin,seMilk,spMilk,burnin=3) {
 
-  SDLevel <- matrix(NA, nrow=N, ncol=burnin)
+  #SDLevel <- matrix(NA, nrow=N, ncol=burnin)
 
   pop_ed <- data_pop %>%
     mutate(SDInf = rbinom(1,1,prevHerd),
@@ -144,14 +144,22 @@ sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCa
            CalfHerdID = ifelse(CalfYears > 0,1,0),
            HeifHerdID = ifelse(HeiferYears > 0,1,0),
            AdultHerdID = ifelse(CalfHerdID==0 & HeifHerdID==0,1,0),
-           nCalf_2 = case_when(CalfYears>=15 ~ 8,
-                               CalfYears>15 & CalfYears>=30 ~ 14,
-                               CalfYears>30 & CalfYears>=50 ~ 20,
+           nCalf_2 = case_when(CalfYears<=15 ~ 8,
+                               CalfYears>15 & CalfYears<=30 ~ 14,
+                               CalfYears>30 & CalfYears<=50 ~ 20,
                                CalfYears>50 ~ 25),
-           nHeif_2 = case_when(HeiferYears>=15 ~ 8,
-                               HeiferYears>15 & CalfYears>=30 ~ 14,
-                               HeiferYears>30 & CalfYears>=50 ~ 20,
-                               HeiferYears>50 ~ 25)) %>%
+           nCalf_2 = ifelse(nCalf_2==8 & nCalf_2>CalfYears,CalfYears,nCalf_2),
+           nHeif_2 = case_when(HeiferYears<=15 ~ 8,
+                               HeiferYears>15 & HeiferYears<=30 ~ 14,
+                               HeiferYears>30 & HeiferYears<=50 ~ 20,
+                               HeiferYears>50 ~ 25),
+           nHeif_2 = ifelse(nHeif_2==8 & nHeif_2>HeiferYears,HeiferYears,nHeif_2),
+           nAdult_2 = case_when(CattleYears<=15 ~ 8,
+                                CattleYears>15 & CattleYears<=30 ~ 14,
+                                CattleYears>30 & CattleYears<=50 ~ 20,
+                                CattleYears>50 ~ 25),
+           nAdult_2 = ifelse(nAdult_2==8 & nAdult_2>CattleYears,CattleYears,nAdult_2)
+    ) %>%
     left_join(probSamp, by='HerdTypeText')
 
   for(t in 1:burnin) {
@@ -171,13 +179,13 @@ sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCa
                                    SampSlaugh*rbinom(1,1,(prevAni*seAni+(1-prevAni)*(1-spAni))),
                                    SampSlaugh*rbinom(1,1,1-spAni)),
              ResultHeif = ifelse(SDInf==1,
-                                 SampHeif*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^nHeif), # OBS include HeiferYears
+                                 SampHeif*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^ifelse(SDLevel==1,nHeif,nHeif_2)),
                                  SampHeif*rbinom(1,1,1-(1-(1-spAni))^nHeif)),
              ResultCalf = ifelse(SDInf==1,
-                                 SampCalf*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^nCalf), # OBS include CalfYears
+                                 SampCalf*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^ifelse(SDLevel==1,nCalf,nHeif_2)),
                                  SampCalf*rbinom(1,1,1-(1-(1-spAni))^nCalf)),
              ResultAdult = ifelse(SDInf==1,
-                                  SampAdult*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^nAdult), # OBS include CalfYears
+                                  SampAdult*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^ifelse(SDLevel==1,nAdult,nAdult_2)),
                                   SampAdult*rbinom(1,1,1-(1-(1-spAni))^nAdult)),
              ResultVol = ifelse(SDInf==1,
                                 SampVol*rbinom(1,1,1-(1-(prevAni*seAni+(1-prevAni)*(1-spAni)))^nVol),
@@ -198,7 +206,7 @@ sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCa
              SDLevelText = factor(SDLevel, levels=c(1,2), labels=c('Level 1','Level 2'))
       )
 
-    SDLevel[,t] <- pop_ed$SDLevel
+    #SDLevel[,t] <- pop_ed$SDLevel
 
   }
 
@@ -235,10 +243,10 @@ level_type <- function(data_level){
     mutate(Proportion = round(Frequency/sum(Frequency),2),
            Percent = 100*Proportion)
 
-  pop_type_cross <- pop_type_sum %>%
-    mutate(TableValue = str_c(Frequency,' (',Percent,' %)')) %>%
-    pivot_wider(id_cols=SDLevelText, names_from = SDInfText, values_from = TableValue)
+  # pop_type_cross <- pop_type_sum %>%
+  #   mutate(TableValue = str_c(Frequency,' (',Percent,' %)')) %>%
+  #   pivot_wider(id_cols=SDLevelText, names_from = SDInfText, values_from = TableValue)
 
-  return(pop_type_cross)
+  return(pop_type_sum)
 
 }

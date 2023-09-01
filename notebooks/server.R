@@ -88,7 +88,7 @@ shinyServer(
 
       data <- sdubcontrol(popdata_arg,input$prevHerd_inp,input$prevAni_inp,
                           probSamp_arg,
-                          input$seAni_inp,input$spAni_inp,input$nHeif_inp,input$nCalf_inp,input$nVol_inp,
+                          input$seAni_inp,input$spAni_inp,input$nHeif_inp,input$nCalf_inp,input$nAdult_inp,input$nVol_inp,
                           input$seClin_inp,input$spClin_inp,input$probClinInf_inp,input$probClin_inp,
                           input$seMilk_inp,input$spMilk_inp)
 
