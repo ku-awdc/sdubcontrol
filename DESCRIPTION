@@ -1,11 +1,12 @@
 Package: sdubcontrol
-Title: What the Package Does (One Line, Title Case)
-Version: 0.1.0-1
-Date: 2023-08-24
+Title: A Shiny Application Illustrating Salmonella Dublin Control
+Version: 0.2.0-1
+Date: 2023-09-02
 Description: What the package does (one paragraph).
 Authors@R:
   c(
-    person(given="Joe", family="Bloggs", email="joe@bloggs.com", role=c("aut", "cre"))
+    person(given="Alice", family="Puk Skarbye", email="aps@sund.ku.dk", role=c("aut", "cre")),
+    person(given="Matt", family="Denwood", email="md@sund.ku.dk", role=c("aut"))
   )    
 License: GPL (>= 3)
 Encoding: UTF-8
@@ -15,10 +16,11 @@ Depends:
   R (>= 4.1.0)
 Imports:
   rlang,
-  dplyr,
-  tibble
+  tidyverse,
+  shiny,
+  shinydashboard,
+  shinyMatrix
 Suggests: 
-  neatpkg,
   knitr,
   rmarkdown,
   spelling,
@@ -26,3 +28,4 @@ Suggests:
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Language: en-GB
+LazyData: true
