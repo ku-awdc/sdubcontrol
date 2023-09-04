@@ -26,7 +26,7 @@ sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCa
   pop_ed <- data_pop %>%
     mutate(SDInf = rbinom(1,1,prevHerd),
            SDInfText = factor(SDInf, levels=c(0,1), labels=c('Non infected','Infected')),
-           SDLevel=1,
+           SDLevel=0,
            CalfHerdID = ifelse(CalfYears > 0,1,0),
            HeifHerdID = ifelse(HeiferYears > 0,1,0),
            AdultHerdID = ifelse(CalfHerdID==0 & HeifHerdID==0,1,0),
@@ -87,9 +87,10 @@ sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCa
              ResultSum = sum(ResultSlaugh,ResultHeif,ResultCalf,ResultAdult,ResultVol,ResultSusp,ResultMilk),
              SDLevel = case_when(SampSum>0 & ResultSum==0 ~ 1,
                                  SampSum>0 & ResultSum>0 ~ 2,
+                                 SDLevel==0 & SampSum==0 ~ 0,
                                  SDLevel==1 & SampSum==0 ~ 1,
                                  SDLevel==2 & SampSum==0 ~ 2),
-             SDLevelText = factor(SDLevel, levels=c(1,2), labels=c('Level 1','Level 2'))
+             SDLevelText = factor(SDLevel, levels=c(1,2,0), labels=c('Level 1','Level 2','Unknown'))
       )
 
     #SDLevel[,t] <- pop_ed$SDLevel

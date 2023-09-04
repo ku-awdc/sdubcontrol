@@ -15,8 +15,8 @@ dashboardPage(
   dashboardBody(
     tabItems(
       tabItem(tabName = "intro",
-              titlePanel(title="Introduction")
-              #introduction
+              titlePanel(title="Introduction"),
+              introduction
 
       ),
       tabItem(tabName = "pop",
@@ -43,9 +43,21 @@ dashboardPage(
                                        cols=list(names=TRUE), rows=list(names=FALSE)),
                            actionButton("gen_pop", "Simulate cattle population")
                        ),
-                       box(width = 12,
+                       box(width = 6,
                            title = "Population demografics", status='primary', solidHeader = TRUE,
+                           tpop,
                            tableOutput("view"),
+                           ttype,
+                           plotOutput("herdtype"),
+                           tsize,
+                           plotOutput("herdsize",
+                                      height = "600px"),
+                           thprop,
+                           plotOutput("heifprop",
+                                      height = "600px"),
+                           tcprop,
+                           plotOutput("calfprop",
+                                      height = "600px")
                        ),
 
                 )
@@ -55,7 +67,7 @@ dashboardPage(
               titlePanel(title="Input parameters for the diagnostic tests"),
               fluidRow(
                 column(width = 12,
-                       box(width = 12,
+                       box(width = 6,
                            title = "Animal blood samples", status='primary', solidHeader = TRUE,
                            numericInput('seAni_inp','Enter blood sample sensitivity',value=seAni),
                            numericInput('spAni_inp','Enter blood sample specificity',value=spAni),
@@ -94,14 +106,14 @@ dashboardPage(
                                        cols=list(names=TRUE), rows=list(names=FALSE)),
                            numericInput('nVol_inp','Enter the number of voluntary samples at each sampling round',value=nVol),
                        ),
-                       box(width = 12,
+                       box(width = 6,
                            title = "Clinical animal sample cultures", status='primary', solidHeader = TRUE,
                            numericInput('seClin_inp','Enter culture sensitivity',value=seClin),
                            numericInput('spClin_inp','Enter culture specificity',value=spClin),
                            numericInput('probClinInf_inp','Enter probability of observing clinical signs indicating S. Dublin  in an infected herd',value=probClinInf),
                            numericInput('probClin_inp','Enter probability of observing clinical signs indicating S. Dublin in a non-infected herd',value=probClin),
                        ),
-                       box(width = 12,
+                       box(width = 6,
                            title = "Bulk tank milk samples", status='primary', solidHeader = TRUE,
                            numericInput('seMilk_inp','Enter milk sample sensitivity',value=seMilk),
                            numericInput('spMilk_inp','Enter milk sample specificity',value=spMilk),
@@ -123,15 +135,27 @@ dashboardPage(
                            title = "Salmonalla Dublin prevalence", status='primary', solidHeader = TRUE,
                            sliderInput("prevHerd_inp", label="Set true herd level prevalence for S. Dublin", min = 0, max = 1, value = prevHerd),
                            sliderInput("prevAni_inp", label="Set within farm level prevalence for S. Dublin", min = 0, max = 1, value = prevAni),
+                           numericInput('burnin_inp','Enter number of sampling periods',value=1),
                            actionButton("gen_level", "Output surveillance classifications")
                        ),
                        box(width = 3,
                            title = "Overall herd levels", status='primary', solidHeader = TRUE,
                            tableOutput("cross"),
                        ),
-                       box(width = 3,
-                           title = "Herd type levels", status='primary', solidHeader = TRUE,
+                       box(width = 4,
+                           title = "Number of herds sampled in the last period", status='primary', solidHeader = TRUE,
+                           tableOutput("sampfreq"),
+                       ),
+                ),
+                column(width = 12,
+                       box(width = 4,
+                           title = "Herd type levels table", status='primary', solidHeader = TRUE,
                            tableOutput("typelevel"),
+                       ),
+                       box(width = 6,
+                           title = "Herd type levels figure", status='primary', solidHeader = TRUE,
+                           plotOutput("typelevelfig",
+                                      height = "600px"),
                        ),
                 )
               )

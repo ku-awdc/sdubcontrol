@@ -5,7 +5,16 @@ library(shinyMatrix)
 library(sdubcontrol)
 
 # Text for the section Introduction
-# introduction <- list(p(""),
+introduction <- list(p("The sdubcontrol pakage is meant as a tool to support decisions on a surveillance control program for Salmonella Dublin in cattle."),
+                     p("In the current setup the surveillance programme in the package classifies cattle herds into Level 1 (probabily not infected with Salmonella Dublin) and Level 2 (probably infected with Salmonella Dublin) and the package output a sentivity and specificity for this classification assuming a true infection prevalence"),
+                     p("The package allows the user to input a cattle herd population with specified herd types (e.g. Dairy herd) and herd sizes.",
+                       "This is done in the menu 'Cattle population'. Data on the cattle herd population may be uploaded directly or may be simulated from summary data."),
+                     p("Subsequently the user may choose what tests for Salmonella Dublin to include in the surveillance program. This is done in the menu 'Diagnostic tests'.",
+                       "The current version of the package include animal blood samples, samples taken at clinical suspicion of Salmonella Dublin and bulk tank milk samples.",
+                       "For each test type the sensitivity and specificity may be adjusted. Furthermore, the user may specify how often differnt herd types or age-groups are sampled."),
+                     p("Finally, the package output how herds are classified into Level 1 and Level 2 given the above inputs and a true infection prevalence."))
+
+# explain <- list(p(""),
 #                      p(""),
 #                      p(""),
 #                      p(""),
@@ -14,8 +23,8 @@ library(sdubcontrol)
 
 #### Cattle herd population ####
 
-# Default population size
-N <- 13869
+# Default population size (DK 13869)
+N <- 1387
 
 # Load data on Danish herd types and size distributions
 data("CattleDenmark", envir=environment())
@@ -26,7 +35,12 @@ type_size_distr <- CattleDenmark %>%
 # convert data to matrix to display as default for manual input
 matrix_distr <- as.matrix(type_size_distr)
 
-
+# Text for the section Cattle population
+tpop <- list(h3('Head of cattle herd population data'))
+ttype <- list(h3('Herd type distribution'))
+tsize <- list(h3('Herd size distributions'))
+thprop <- list(h3('Distribution of the proportion of heifers'))
+tcprop <- list(h3('Distribution of the proportion of calves'))
 
 #### Diagnostic tests ####
 
@@ -44,9 +58,9 @@ seAni <- 0.95
 # Animal blood sample specificity
 spAni <- 0.98
 # Probability of slaughter samples for each herd type
-probSampSlaugh = c(0,0.5,0.5,0.5,0.5,0.5)
+probSampSlaugh = c(0,0.1,0.1,0.3,0.5,0.3)
 # Probability of heifer samples for each herd type
-probSampHeif = c(c(0,1,1,0,0,0),c(1,1,1,1,1,1))
+probSampHeif = c(c(0,0.25,0.5,0,0,0),c(0.5,0.5,0.5,0.5,0.5,0.5))
 # Number of Heifers sampled
 nHeif <- 8
 # Probability of calf samples for each herd type

@@ -1,7 +1,7 @@
 function(input, output, session) {
 
-  # Introduction text
-  # output$introduction <- renderText({introduction})
+  #Introduction text
+  output$introduction <- renderText({introduction})
 
   # distrdata <- reactive({
   #
@@ -88,7 +88,7 @@ function(input, output, session) {
                         probSamp_arg,
                         input$seAni_inp,input$spAni_inp,input$nHeif_inp,input$nCalf_inp,input$nAdult_inp,input$nVol_inp,
                         input$seClin_inp,input$spClin_inp,input$probClinInf_inp,input$probClin_inp,
-                        input$seMilk_inp,input$spMilk_inp)
+                        input$seMilk_inp,input$spMilk_inp,input$burnin_inp)
 
     return(data)
 
@@ -102,12 +102,36 @@ function(input, output, session) {
     }
   })
 
-  # Output for surveillance levels
-  output$test <- renderTable({
+  output$herdtype <- renderPlot({
     if(input$gen_pop) {
-      head(leveldata())
+      herdtype_bar(popdata())
     }
   })
+
+  output$herdsize <- renderPlot({
+    if(input$gen_pop) {
+      herdsize_hist(popdata())
+    }
+  })
+
+  output$heifprop <- renderPlot({
+    if(input$gen_pop) {
+      heifprop_hist(popdata())
+    }
+  })
+
+  output$calfprop <- renderPlot({
+    if(input$gen_pop) {
+      calfprop_hist(popdata())
+    }
+  })
+
+  # Output for surveillance levels
+  # output$test <- renderTable({
+  #   if(input$gen_pop) {
+  #     head(leveldata())
+  #   }
+  # })
 
   output$cross <- renderTable({
     if(input$gen_level) {
@@ -115,9 +139,21 @@ function(input, output, session) {
     }
   })
 
+  output$sampfreq <- renderTable({
+    if(input$gen_level) {
+      sampfreq_table(leveldata())
+    }
+  })
+
   output$typelevel <- renderTable({
     if(input$gen_level) {
       level_type(leveldata())
+    }
+  })
+
+  output$typelevelfig <- renderPlot({
+    if(input$gen_level) {
+      leveltype_bar(leveldata())
     }
   })
 

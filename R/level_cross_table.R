@@ -6,7 +6,7 @@
 level_cross_table <- function(data_level){
 
   pop_sum <- data_level %>%
-    filter(!is.na(SDLevelText)) %>%
+    filter(SDLevel != 0) %>%
     group_by(SDInfText,SDLevelText) %>%
     summarise(Frequency=n()) %>%
     mutate(Proportion = round(Frequency/sum(Frequency),2),

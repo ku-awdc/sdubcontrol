@@ -6,16 +6,16 @@
 level_type <- function(data_level){
 
   pop_type_sum <- data_level %>%
-    #filter(!is.na(SDLevelText)) %>%
+    #filter(SDLevel != 0) %>%
     group_by(HerdTypeText,SDInfText,SDLevelText) %>%
     summarise(Frequency=n()) %>%
     mutate(Proportion = round(Frequency/sum(Frequency),2),
            Percent = 100*Proportion)
 
-  # pop_type_cross <- pop_type_sum %>%
-  #   mutate(TableValue = str_c(Frequency,' (',Percent,' %)')) %>%
-  #   pivot_wider(id_cols=SDLevelText, names_from = SDInfText, values_from = TableValue)
+  pop_type_cross <- pop_type_sum %>%
+    mutate(TableValue = str_c(Frequency,' (',Percent,' %)')) %>%
+    pivot_wider(id_cols=c('HerdTypeText','SDLevelText'), names_from = SDInfText, values_from = TableValue)
 
-  return(pop_type_sum)
+  return(pop_type_cross)
 
 }
