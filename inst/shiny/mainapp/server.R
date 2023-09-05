@@ -24,38 +24,151 @@ function(input, output, session) {
   output$tvol <- renderText({tvol})
 
   observeEvent(input$enter_distr, {
-    updateMatrixInput(session, "SlaughSamp_inp",
-                      value=matrix(c(input$enter_distr[,2],probSampSlaugh),
-                                   nrow=6,
-                                   dimnames=list(c(1:6),c('HerdTypeText','probSampSlaugh'))))
+    if(input$SlaughSamp_check == 1){
+      updateMatrixInput(session, "SlaughSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],probSampSlaugh),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampSlaugh'))))
+    } else {
+      updateMatrixInput(session, "SlaughSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],rep(0,6)),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampSlaugh'))))
+    }
+  })
+
+  observeEvent(input$SlaughSamp_check, {
+    if(input$SlaughSamp_check == 1){
+      updateMatrixInput(session, "SlaughSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],probSampSlaugh),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampSlaugh'))))
+    } else {
+      updateMatrixInput(session, "SlaughSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],rep(0,6)),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampSlaugh'))))
+    }
   })
 
   observeEvent(input$enter_distr, {
-    updateMatrixInput(session, "HeifSamp_inp",
-                      value=matrix(c(input$enter_distr[,2],probSampHeif),
-                                   nrow=6,
-                                   dimnames=list(c(1:6),c('HerdTypeText','probSampHeif_level1','probSampHeif_level2'))))
+    if(input$HeifSamp_check == 1){
+      updateMatrixInput(session, "HeifSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],probSampHeif),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampHeif_level1','probSampHeif_level2'))))
+    } else {
+      updateMatrixInput(session, "HeifSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],rep(0,6),rep(0,6)),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampHeif_level1','probSampHeif_level2'))))
+    }
+
+  })
+
+  observeEvent(input$HeifSamp_check, {
+    if(input$HeifSamp_check == 1){
+      updateMatrixInput(session, "HeifSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],probSampHeif),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampHeif_level1','probSampHeif_level2'))))
+    } else {
+      updateMatrixInput(session, "HeifSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],rep(0,6),rep(0,6)),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampHeif_level1','probSampHeif_level2'))))
+    }
+
   })
 
   observeEvent(input$enter_distr, {
-    updateMatrixInput(session, "CalfSamp_inp",
-                      value=matrix(c(input$enter_distr[,2],probSampCalf),
-                                   nrow=6,
-                                   dimnames=list(c(1:6),c('HerdTypeText','probSampCalf_level1','probSampCalf_level2'))))
+    if(input$CalfSamp_check == 1){
+      updateMatrixInput(session, "CalfSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],probSampCalf),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampCalf_level1','probSampCalf_level2'))))
+    } else {
+      updateMatrixInput(session, "CalfSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],rep(0,6),rep(0,6)),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampCalf_level1','probSampCalf_level2'))))
+    }
+
+  })
+
+  observeEvent(input$CalfSamp_check, {
+    if(input$CalfSamp_check == 1){
+      updateMatrixInput(session, "CalfSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],probSampCalf),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampCalf_level1','probSampCalf_level2'))))
+    } else {
+      updateMatrixInput(session, "CalfSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],rep(0,6),rep(0,6)),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampCalf_level1','probSampCalf_level2'))))
+    }
+
   })
 
   observeEvent(input$enter_distr, {
-    updateMatrixInput(session, "AdultSamp_inp",
-                      value=matrix(c(input$enter_distr[,2],probSampCalf),
-                                   nrow=6,
-                                   dimnames=list(c(1:6),c('HerdTypeText','probSampAdult_level1','probSampAdult_level2'))))
+    if(input$AdultSamp_check == 1){
+      updateMatrixInput(session, "AdultSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],probSampAdult),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampAdult_level1','probSampAdult_level2'))))
+    } else {
+      updateMatrixInput(session, "AdultSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],rep(0,6),rep(0,6)),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampAdult_level1','probSampAdult_level2'))))
+    }
+
+  })
+
+  observeEvent(input$AdultSamp_check, {
+    if(input$AdultSamp_check == 1){
+      updateMatrixInput(session, "AdultSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],probSampAdult),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampAdult_level1','probSampAdult_level2'))))
+    } else {
+      updateMatrixInput(session, "AdultSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],rep(0,6),rep(0,6)),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampAdult_level1','probSampAdult_level2'))))
+    }
+
   })
 
   observeEvent(input$enter_distr, {
-    updateMatrixInput(session, "VolSamp_inp",
-                      value=matrix(c(input$enter_distr[,2],probSampVol),
-                                   nrow=6,
-                                   dimnames=list(c(1:6),c('HerdTypeText','probSampVol_level1','probSampVol_level2'))))
+    if(input$VolSamp_check == 1){
+      updateMatrixInput(session, "VolSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],probSampVol),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampVol_level1','probSampVol_level2'))))
+    } else {
+      updateMatrixInput(session, "VolSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],rep(0,6),rep(0,6)),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampVol_level1','probSampVol_level2'))))
+    }
+
+  })
+
+  observeEvent(input$VolSamp_check, {
+    if(input$VolSamp_check == 1){
+      updateMatrixInput(session, "VolSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],probSampVol),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampVol_level1','probSampVol_level2'))))
+    } else {
+      updateMatrixInput(session, "VolSamp_inp",
+                        value=matrix(c(input$enter_distr[,2],rep(0,6),rep(0,6)),
+                                     nrow=6,
+                                     dimnames=list(c(1:6),c('HerdTypeText','probSampVol_level1','probSampVol_level2'))))
+    }
+
   })
 
   observeEvent(input$enter_distr, {
@@ -88,7 +201,8 @@ function(input, output, session) {
                         probSamp_arg,
                         input$seAni_inp,input$spAni_inp,input$nHeif_inp,input$nCalf_inp,input$nAdult_inp,input$nVol_inp,
                         input$seClin_inp,input$spClin_inp,input$probClinInf_inp,input$probClin_inp,
-                        input$seMilk_inp,input$spMilk_inp,input$burnin_inp)
+                        input$seMilk_inp,input$spMilk_inp,
+                        input$missSamp_inp,input$burnin_inp)
 
     return(data)
 

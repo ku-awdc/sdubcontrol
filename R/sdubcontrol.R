@@ -19,7 +19,7 @@
 #' @param burnin
 #'
 #' @export
-sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCalf,nAdult,nVol,seClin,spClin,probClinInf,probClin,seMilk,spMilk,burnin=3) {
+sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCalf,nAdult,nVol,seClin,spClin,probClinInf,probClin,seMilk,spMilk,missSamp=FALSE,burnin=3) {
 
   #SDLevel <- matrix(NA, nrow=N, ncol=burnin)
 
@@ -87,7 +87,7 @@ sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCa
              ResultSum = sum(ResultSlaugh,ResultHeif,ResultCalf,ResultAdult,ResultVol,ResultSusp,ResultMilk),
              SDLevel = case_when(SampSum>0 & ResultSum==0 ~ 1,
                                  SampSum>0 & ResultSum>0 ~ 2,
-                                 SDLevel==0 & SampSum==0 ~ 0,
+                                 SDLevel==0 & SampSum==0 ~ ifelse(missSamp==TRUE,2,0),
                                  SDLevel==1 & SampSum==0 ~ 1,
                                  SDLevel==2 & SampSum==0 ~ 2),
              SDLevelText = factor(SDLevel, levels=c(1,2,0), labels=c('Level 1','Level 2','Unknown'))
