@@ -58,7 +58,7 @@ seAni <- 0.90
 # Animal blood sample specificity
 spAni <- 0.96
 # Probability of slaughter samples for each herd type
-probSampSlaugh = c(0,0.1,0.1,0.3,0.5,0.3)
+probSampSlaugh = c(0,0.1,0.1,0.3,0.9,0.3)
 # Probability of heifer samples for each herd type
 probSampHeif = c(c(0,0.25,0.5,0,0,0),c(0.5,0.5,0.5,0.5,0.5,0.5))
 # Number of Heifers sampled
@@ -68,7 +68,7 @@ probSampCalf = c(c(0,0,0,0,0,0),c(1,1,1,1,1,1))
 # Number of Heifers sampled
 nCalf <- 8
 # Probability of adult samples for each herd type
-probSampAdult = c(c(0,0,0,0,0,0),c(0,1,1,1,1,1))
+probSampAdult = c(c(0,0,0,0,0,0),c(0,0.5,0.5,0.5,0.5,0.5))
 # Number of Heifers sampled
 nAdult <- 8
 # Probability of voluntary sampling for each herd type

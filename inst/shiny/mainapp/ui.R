@@ -105,7 +105,7 @@ dashboardPage(
                            ),
                            checkboxInput("AdultSamp_check", label = "Include sampling of animals in herds without calves or heifers in the program", value = FALSE),
                            conditionalPanel(
-                             condition = "input.VolSamp_check == 1",
+                             condition = "input.AdultSamp_check == 1",
                              tadult,
                              matrixInput("AdultSamp_inp", 'Enter the probability of adults being sampled for each herd type',
                                          value = matrix(c(rep('type',6),probSampAdult),
