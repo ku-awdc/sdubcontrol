@@ -21,6 +21,7 @@ sdubcontrol(
   probClin,
   seMilk,
   spMilk,
+  missSamp = FALSE,
   burnin = 3
 )
 }
