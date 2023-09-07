@@ -1,7 +1,7 @@
 Package: sdubcontrol
 Title: A Shiny Application Illustrating Salmonella Dublin Control
-Version: 0.2.0-1
-Date: 2023-09-02
+Version: 0.3.0-1
+Date: 2023-09-07
 Description: What the package does (one paragraph).
 Authors@R:
   c(
