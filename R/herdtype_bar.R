@@ -1,6 +1,6 @@
 #' Function for generating herd type bar chart
 #'
-#' @param data_pop
+#' @param data_pop input data
 #'
 #' @export
 

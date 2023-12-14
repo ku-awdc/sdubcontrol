@@ -1,6 +1,6 @@
 #' Function for generating herd type level bar chart
 #'
-#' @param data_level
+#' @param data_level input data
 #'
 #' @export
 

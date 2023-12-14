@@ -7,7 +7,9 @@
 generate_cattle_population(N, matrix_distr)
 }
 \arguments{
-\item{matrix_distr}{}
+\item{N}{number of herds}
+
+\item{matrix_distr}{herd size distribution by type}
 }
 \description{
 Generate cattle herd population function

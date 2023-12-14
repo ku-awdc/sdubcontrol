@@ -1,17 +1,9 @@
 #' @name sdubcontrol-package
+#' @title A Shiny Application Illustrating Salmonella Dublin Control
 #' @aliases sdubcontrol
-#' @title What the Package Does (One Line, Title Case)
 #'
 #' @details
 #' Some description of the package
-#'
-#' @examples
-#' ## An example function:
-#' df <- example_function()
-#' df
-#'
-#' ## To cite this package in publications use:
-#' citation("sdubcontrol")
 #'
 #' @seealso
 #' \code{\link[neatpkg]{pkg_new}} for the function that created this package

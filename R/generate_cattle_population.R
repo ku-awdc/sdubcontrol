@@ -1,9 +1,9 @@
 #' Generate cattle herd population function
 #'
-#' @param N
-#' @param matrix_distr
+#' @param N number of herds
+#' @param matrix_distr herd size distribution by type
 #'
-#' @import tidyverse
+#' @importFrom stats filter rbeta rbinom reorder rlnorm rmultinom
 #'
 #' @export
 generate_cattle_population <- function(N,matrix_distr){

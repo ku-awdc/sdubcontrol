@@ -1,6 +1,6 @@
 #' Function for generating sample frequency table
 #'
-#' @param data_level
+#' @param data_level input data
 #'
 #' @export
 sampfreq_table <- function(data_level){

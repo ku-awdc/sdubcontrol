@@ -1,22 +1,24 @@
-#' Function for generating surveillance output
+#' @rdname sdubcontrol-package
+#' @title Function for generating surveillance output
 #'
-#' @param data_pop
-#' @param prevHerd
-#' @param prevAni
-#' @param probSamp
-#' @param seAni
-#' @param spAni
-#' @param nHeif
-#' @param nCalf
-#' @param nAdult
-#' @param nVol
-#' @param seClin
-#' @param spClin
-#' @param probClinInf
-#' @param probClin
-#' @param seMilk
-#' @param spMilk
-#' @param burnin
+#' @param data_pop input population
+#' @param prevHerd surveillance parameter
+#' @param prevAni surveillance parameter
+#' @param probSamp surveillance parameter
+#' @param seAni surveillance parameter
+#' @param spAni surveillance parameter
+#' @param nHeif surveillance parameter
+#' @param nCalf surveillance parameter
+#' @param nAdult surveillance parameter
+#' @param nVol surveillance parameter
+#' @param seClin surveillance parameter
+#' @param spClin surveillance parameter
+#' @param probClinInf surveillance parameter
+#' @param probClin surveillance parameter
+#' @param seMilk surveillance parameter
+#' @param spMilk surveillance parameter
+#' @param spMilk surveillance parameter
+#' @param burnin number of burnin cycles
 #'
 #' @export
 sdubcontrol <- function(data_pop,prevHerd,prevAni,probSamp,seAni,spAni,nHeif,nCalf,nAdult,nVol,seClin,spClin,probClinInf,probClin,seMilk,spMilk,missSamp=FALSE,burnin=3) {

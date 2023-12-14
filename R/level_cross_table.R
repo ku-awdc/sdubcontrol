@@ -1,6 +1,6 @@
 #' Function for generating cross table for overall population
 #'
-#' @param data_level
+#' @param data_level input data
 #'
 #' @export
 level_cross_table <- function(data_level){

@@ -7,7 +7,7 @@
 level_cross_table(data_level)
 }
 \arguments{
-\item{data_level}{}
+\item{data_level}{input data}
 }
 \description{
 Function for generating cross table for overall population

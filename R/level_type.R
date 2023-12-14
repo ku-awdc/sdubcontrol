@@ -1,6 +1,6 @@
 #' Function for generating herd type level table
 #'
-#' @param data_level
+#' @param data_level input data
 #'
 #' @export
 level_type <- function(data_level){

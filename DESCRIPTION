@@ -1,7 +1,7 @@
 Package: sdubcontrol
 Title: A Shiny Application Illustrating Salmonella Dublin Control
-Version: 0.3.0-1
-Date: 2023-09-07
+Version: 0.3.0-2
+Date: 2023-12-14
 Description: What the package does (one paragraph).
 Authors@R:
   c(
@@ -13,10 +13,9 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Depends:
-  R (>= 4.1.0)
+  R (>= 4.1.0),
+  tidyverse
 Imports:
-  rlang,
-  tidyverse,
   shiny,
   shinydashboard,
   shinyMatrix

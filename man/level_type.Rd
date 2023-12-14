@@ -7,7 +7,7 @@
 level_type(data_level)
 }
 \arguments{
-\item{data_level}{}
+\item{data_level}{input data}
 }
 \description{
 Function for generating herd type level table

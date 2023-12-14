@@ -1,6 +1,6 @@
 #' Function for generating heifer proportion histogram
 #'
-#' @param data_pop
+#' @param data_pop input data
 #'
 #' @export
 

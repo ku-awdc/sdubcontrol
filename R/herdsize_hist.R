@@ -1,6 +1,6 @@
 #' Function for generating herd size histogram
 #'
-#' @param data_pop
+#' @param data_pop input data
 #'
 #' @export
 

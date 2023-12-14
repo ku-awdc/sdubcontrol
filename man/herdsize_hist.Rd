@@ -7,7 +7,7 @@
 herdsize_hist(data_pop)
 }
 \arguments{
-\item{data_pop}{}
+\item{data_pop}{input data}
 }
 \description{
 Function for generating herd size histogram
